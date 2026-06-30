@@ -30,7 +30,14 @@ st.set_page_config(page_title="PDF Chat — RAG Assistant", page_icon="📄", la
 st.markdown(
     """
     <style>
-    .stApp { background-color: #0f1117; }
+    .stApp { .stApp{
+    background: linear-gradient(
+        135deg,
+        #0f172a,
+        #111827,
+        #1e293b
+    );
+} }
     section[data-testid="stSidebar"] { background-color: #171922; border-right: 1px solid #2a2d3a; }
     .chat-bubble-user {
         background:#2563eb22; border:1px solid #2563eb55; padding:12px 16px;
@@ -208,6 +215,18 @@ if question:
                 for s in final_sources
             )
             st.markdown(pills, unsafe_allow_html=True)
+
+            # NEW: Show the retrieved chunks
+            st.divider()
+            st.subheader("📄 Retrieved Chunks")
+
+            for i, chunk in enumerate(final_sources):
+                with st.expander(
+                    f"Chunk {chunk['chunk_index']} | "
+                    f"{chunk['source']} | "
+                    f"Score: {chunk['score']:.2f}"
+                ):
+                    st.markdown(chunk["text"])
 
     st.session_state.messages.append(
         {"role": "assistant", "content": final_text, "sources": final_sources}
