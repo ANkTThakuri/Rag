@@ -75,13 +75,7 @@ with st.sidebar:
     st.markdown("## 📄 PDF Chat")
     st.caption("Multi-PDF RAG assistant powered by LlamaParse + Claude")
 
-    with st.expander("🔑 API Key", expanded=False):
-        llama_key = st.text_input(
-            "LlamaParse API Key",
-            value=os.getenv("llama-parse-api-key", ""),
-            type="password",
-            help="Get a free key at cloud.llamaindex.ai. This is the only key needed — answering runs locally via Ollama.",
-        )
+    llama_key = os.getenv("LLAMA_PARSE_API_KEY")
 
     with st.expander("🖥️ Local model (Ollama)", expanded=False):
         if rag.is_ollama_running():
